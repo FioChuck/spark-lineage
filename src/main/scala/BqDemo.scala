@@ -65,10 +65,6 @@ object BqDemo {
         "sum(views_24)"
       )
 
-    df_out.show();
-
-    print("test")
-
     df_out.write
       .format("bigquery")
       .option("writeMethod", "direct")
