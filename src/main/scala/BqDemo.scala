@@ -13,17 +13,17 @@ object BqDemo {
     // TODO how to pass arguments in debug? Not possible with Metals?
     val spark = SparkSession.builder
       .appName("Bq Demo")
-      .config("spark.master", "local[*]") // local dev
-      .config(
-        "spark.hadoop.fs.AbstractFileSystem.gs.impl",
-        "com.google.cloud.hadoop.fs.gcs.GoogleHadoopFS"
-      )
-      .config("spark.hadoop.fs.gs.project.id", "cf-data-analytics")
-      .config("spark.hadoop.google.cloud.auth.service.account.enable", "true")
-      .config(
-        "spark.hadoop.google.cloud.auth.service.account.json.keyfile",
-        "/Users/chasf/Desktop/cf-data-analytics-56659d6eac1c.json"
-      )
+      // .config("spark.master", "local[*]") // local dev
+      // .config(
+      //   "spark.hadoop.fs.AbstractFileSystem.gs.impl",
+      //   "com.google.cloud.hadoop.fs.gcs.GoogleHadoopFS"
+      // )
+      // .config("spark.hadoop.fs.gs.project.id", "cf-data-analytics")
+      // .config("spark.hadoop.google.cloud.auth.service.account.enable", "true")
+      // .config(
+      //   "spark.hadoop.google.cloud.auth.service.account.json.keyfile",
+      //   "/Users/chasf/Desktop/cf-data-analytics-56659d6eac1c.json"
+      // )
       .getOrCreate()
 
     import spark.implicits._
