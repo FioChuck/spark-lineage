@@ -81,9 +81,9 @@ object BqDemo {
       .withColumnRenamed("title", "page")
       .withColumnRenamed("max_views_jan", "max_views")
 
-    df_out.show()
+    // df_out.show()
 
-    print("done")
+    // print("done")
 
     df_out.write
       .format("bigquery")
