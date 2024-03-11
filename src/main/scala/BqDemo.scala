@@ -7,7 +7,6 @@ import org.apache.spark.sql.types.StringType
 import org.apache.spark.sql.types.StructType
 import org.apache.spark.sql.functions._
 import com.google.cloud.spark.bigquery._
-import spark.implicits._
 
 object BqDemo {
   def main(args: Array[String]): Unit = {
@@ -27,6 +26,8 @@ object BqDemo {
       //   "/Users/chasf/Desktop/cf-data-analytics-56659d6eac1c.json"
       // )
       .getOrCreate()
+
+    import spark.implicits._
 
     val pages = Seq("Google", "Amazon", "Microsoft")
 
