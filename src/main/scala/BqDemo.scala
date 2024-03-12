@@ -11,9 +11,9 @@ import com.google.cloud.spark.bigquery._
 object BqDemo {
   def main(args: Array[String]): Unit = {
 
-    // TODO how to pass arguments in debug? Not possible with Metals?
     val spark = SparkSession.builder
       .appName("Bq Demo")
+      .config("spark.sql.session.timeZone", "America/New_York")
       // .config("spark.master", "local[*]") // local dev
       // .config(
       //   "spark.hadoop.fs.AbstractFileSystem.gs.impl",
@@ -35,34 +35,44 @@ object BqDemo {
       spark.read
         .bigquery("bigquery-public-data.wikipedia.pageviews_2024")
         .filter(to_date($"datehour").between("2024-01-01", "2024-01-31"))
-        .withColumnRenamed("views", "views_24")
+        .filter($"title".isin(pages: _*))
+        .filter($"wiki" === "en")
+        .groupBy("title")
+        .agg(sum("views"))
+        .withColumnRenamed("sum(views)", "views_24")
 
     val df_23 =
       spark.read
         .bigquery("bigquery-public-data.wikipedia.pageviews_2023")
         .filter(to_date($"datehour").between("2023-01-01", "2023-01-31"))
-        .withColumnRenamed("views", "views_23")
+        .filter($"title".isin(pages: _*))
+        .filter($"wiki" === "en")
+        .groupBy("title")
+        .agg(sum("views"))
+        .withColumnRenamed("sum(views)", "views_23")
 
     val df_22 =
       spark.read
         .bigquery("bigquery-public-data.wikipedia.pageviews_2022")
         .filter(to_date($"datehour").between("2022-01-01", "2022-01-31"))
-        .withColumnRenamed("views", "views_22")
+        .filter($"title".isin(pages: _*))
+        .filter($"wiki" === "en")
+        .groupBy("title")
+        .agg(sum("views"))
+        .withColumnRenamed("sum(views)", "views_22")
 
     val df_out = df_24
       .join(df_23, Seq("title"), "inner")
       .join(df_22, Seq("title"), "inner")
       .filter($"title".isin(pages: _*))
-      .groupBy("title")
-      .agg(sum("views_22"), sum("views_23"), sum("views_24"))
       .withColumn(
         "max_views_jan",
-        greatest($"sum(views_22)", $"sum(views_23)", $"sum(views_24)")
+        greatest($"views_22", $"views_23", $"views_24")
       )
       .drop(
-        "sum(views_22)",
-        "sum(views_23)",
-        "sum(views_24)"
+        "views_22",
+        "views_23",
+        "views_24"
       )
 
     df_out.show();
@@ -72,7 +82,7 @@ object BqDemo {
       .option("writeMethod", "direct")
       .mode("append")
       .save(
-        "cf-data-analytics.dataproc.destination"
+        "cf-data-analytics.dataproc.jan_views_spark"
       )
   }
 }
