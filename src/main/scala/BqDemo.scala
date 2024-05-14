@@ -13,7 +13,7 @@ object BqDemo {
 
     val spark = SparkSession.builder
       .appName("Bq Demo")
-      .config("spark.sql.session.timeZone", "America/New_York")
+      // .config("spark.sql.session.timeZone", "America/New_York")
       // .config("spark.master", "local[*]") // local dev
       // .config(
       //   "spark.hadoop.fs.AbstractFileSystem.gs.impl",
@@ -77,7 +77,7 @@ object BqDemo {
 
     df_out.show();
 
-    df_out.write
+     df_out.write
       .format("bigquery")
       .option("writeMethod", "direct")
       .mode("append")
