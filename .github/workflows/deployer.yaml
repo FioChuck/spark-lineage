@@ -28,7 +28,7 @@ jobs:
       - name: deploy fat jar to gcs
         uses: "google-github-actions/upload-cloud-storage@v1"
         with:
-          path: "target/scala-2.12"
+          path: "target/"
           destination: "cf-spark-jobs/spark-lineage"
           glob: "*.jar"
           gzip: false
