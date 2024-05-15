@@ -2,7 +2,7 @@ name := "normalized-data-gen"
 organization := "chasf"
 version := "3.0"
 
-scalaVersion := "2.13"
+scalaVersion := "2.13.14"
 
 val sparkVersion = "3.5.1"
 
