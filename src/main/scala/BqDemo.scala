@@ -23,7 +23,7 @@ object BqDemo {
       // .config("spark.hadoop.google.cloud.auth.service.account.enable", "true")
       // .config(
       //   "spark.hadoop.google.cloud.auth.service.account.json.keyfile",
-      //   "/Users/chasf/Desktop/cf-data-analytics-56659d6eac1c.json"
+      //   "/Users/chasf/Desktop/cf-data-analytics-c0c7b23bcaf4.json"
       // )
       .getOrCreate()
 
@@ -77,12 +77,12 @@ object BqDemo {
 
     df_out.show();
 
-     df_out.write
-      .format("bigquery")
-      .option("writeMethod", "direct")
-      .mode("append")
-      .save(
-        "cf-data-analytics.dataproc.jan_views_spark"
-      )
+    //  df_out.write
+    //   .format("bigquery")
+    //   .option("writeMethod", "direct")
+    //   .mode("append")
+    //   .save(
+    //     "cf-data-analytics.dataproc.jan_views_spark"
+    //   )
   }
 }
